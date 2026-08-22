@@ -122,7 +122,18 @@ function ProjectContent({ project, compact = false }: { project: Project; compac
         ))}
       </div>
 
-      <div className={compact ? "mt-auto pt-8" : "mt-9"}>
+      <div className={(compact ? "mt-auto pt-8" : "mt-9") + " flex flex-wrap items-center gap-5"}>
+        {project.showcase && (
+          <a
+            href={project.showcase}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-3 bg-[var(--accent)] px-5 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
+          >
+            Open live showcase
+            <Icon name="arrow-up-right" className="h-4 w-4" />
+          </a>
+        )}
         <a
           href={project.link}
           target="_blank"

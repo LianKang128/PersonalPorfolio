@@ -29,6 +29,7 @@ export type Project = {
   features: string[];
   tags: string[];
   link: string;
+  showcase?: string;
   visual: "dungeon" | "portfolio";
 };
 
@@ -48,6 +49,7 @@ export const projects: Project[] = [
     ],
     tags: ["Cocos Creator", "TypeScript", "Node.js", "WebSocket", "Algorithms"],
     link: "https://github.com/LianKang128/2DMapRandomGeneration",
+    showcase: "https://lkshowcase.netlify.app/",
     visual: "dungeon",
   },
   {
