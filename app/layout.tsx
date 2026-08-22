@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Syne } from "next/font/google";
+import TargetCursor from "@/components/TargetCursor";
 import "./globals.css";
 
 const display = Syne({
@@ -37,7 +38,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={display.variable + " " + mono.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <TargetCursor />
+      </body>
     </html>
   );
 }

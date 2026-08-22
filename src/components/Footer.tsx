@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
         <a
           href="#top"
-          className="inline-flex min-h-11 items-center gap-3 self-start font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)] sm:self-auto"
+          className="cursor-target inline-flex min-h-11 items-center gap-3 self-start font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)] sm:self-auto"
         >
           Back to top
           <Icon name="arrow-down" className="h-4 w-4 rotate-180" />

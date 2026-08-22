@@ -23,7 +23,7 @@ export default function Contact() {
               </p>
               <a
                 href={"mailto:" + personal.email}
-                className="mt-9 inline-flex min-h-12 max-w-full items-center gap-3 bg-[var(--accent-ink)] px-6 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors duration-200 hover:bg-[#1d2918]"
+                className="cursor-target magnet-target mt-9 inline-flex min-h-12 max-w-full items-center gap-3 bg-[var(--accent-ink)] px-6 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors duration-200 hover:bg-[#1d2918]"
               >
                 <Icon name="mail" className="h-5 w-5 shrink-0" />
                 <span className="[overflow-wrap:anywhere]">Send me an email</span>
@@ -44,7 +44,7 @@ export default function Contact() {
                 <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--subtle)]">Direct line</p>
                 <a
                   href={"mailto:" + personal.email}
-                  className="mt-3 block [overflow-wrap:anywhere] text-lg font-semibold text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
+                  className="cursor-target mt-3 block [overflow-wrap:anywhere] text-lg font-semibold text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
                 >
                   {personal.email}
                 </a>
@@ -57,7 +57,7 @@ export default function Contact() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex min-h-16 items-center justify-between border-b border-[var(--border)] py-3 transition-colors duration-200 hover:text-[var(--accent)]"
+                    className="cursor-target group flex min-h-16 items-center justify-between border-b border-[var(--border)] py-3 transition-colors duration-200 hover:text-[var(--accent)]"
                   >
                     <span>
                       <span className="block font-mono text-xs font-bold uppercase tracking-[0.1em]">{social.label}</span>

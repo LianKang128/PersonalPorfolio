@@ -35,7 +35,7 @@ export default function Hero() {
             <div className="hero-reveal hero-reveal-late mt-10 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#work"
-                className="inline-flex min-h-12 items-center justify-center gap-3 bg-[var(--accent)] px-6 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
+                className="cursor-target magnet-target inline-flex min-h-12 items-center justify-center gap-3 bg-[var(--accent)] px-6 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
               >
                 Explore selected work
                 <Icon name="arrow-down" className="h-4 w-4" />
@@ -43,7 +43,7 @@ export default function Hero() {
               <a
                 href="/resume.pdf"
                 download="Lee-Lian-Kang-Resume.pdf"
-                className="inline-flex min-h-12 items-center justify-center gap-3 border border-[var(--border-strong)] bg-[var(--surface)] px-6 font-mono text-sm font-semibold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--muted)] hover:bg-[var(--surface-raised)]"
+                className="cursor-target inline-flex min-h-12 items-center justify-center gap-3 border border-[var(--border-strong)] bg-[var(--surface)] px-6 font-mono text-sm font-semibold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--muted)] hover:bg-[var(--surface-raised)]"
               >
                 Download résumé
                 <Icon name="download" className="h-4 w-4" />

@@ -67,6 +67,13 @@ button,
   cursor: pointer;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  html.target-cursor-enabled,
+  html.target-cursor-enabled * {
+    cursor: none !important;
+  }
+}
+
 section {
   scroll-margin-top: 7rem;
 }

@@ -128,7 +128,7 @@ function ProjectContent({ project, compact = false }: { project: Project; compac
             href={project.showcase}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-3 bg-[var(--accent)] px-5 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
+            className="cursor-target magnet-target inline-flex min-h-11 items-center gap-3 bg-[var(--accent)] px-5 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
           >
             Open live showcase
             <Icon name="arrow-up-right" className="h-4 w-4" />
@@ -138,7 +138,7 @@ function ProjectContent({ project, compact = false }: { project: Project; compac
           href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex min-h-11 items-center gap-3 border-b border-[var(--foreground)] font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+          className="cursor-target group inline-flex min-h-11 items-center gap-3 border-b border-[var(--foreground)] font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
         >
           View source on GitHub
           <Icon name="arrow-up-right" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -188,7 +188,7 @@ export default function Projects() {
             href={personal.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent)] transition-colors duration-200 hover:text-[#dcff91]"
+            className="cursor-target inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent)] transition-colors duration-200 hover:text-[#dcff91]"
           >
             Browse all GitHub projects
             <Icon name="arrow-up-right" className="h-4 w-4" />

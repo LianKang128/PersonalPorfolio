@@ -1,0 +1,81 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  color: var(--accent);
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(201, 247, 101, 0.3));
+  transform: translate3d(-100px, -100px, 0);
+  transform-origin: 0 0;
+  transition:
+    color 160ms ease,
+    filter 160ms ease,
+    opacity 120ms ease;
+  will-change: transform;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.locked {
+  color: var(--game);
+  filter: drop-shadow(0 0 7px rgba(255, 138, 91, 0.38));
+}
+
+.dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+  transform: translate(-50%, -50%);
+  transition: transform 120ms ease;
+}
+
+.pressed .dot {
+  transform: translate(-50%, -50%) scale(0.55);
+}
+
+.corner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  will-change: transform;
+}
+
+.topLeft {
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.topRight {
+  border-bottom: 0;
+  border-left: 0;
+}
+
+.bottomRight {
+  border-top: 0;
+  border-left: 0;
+}
+
+.bottomLeft {
+  border-top: 0;
+  border-right: 0;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}

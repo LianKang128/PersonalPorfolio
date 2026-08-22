@@ -54,7 +54,7 @@ export default function Navbar() {
           <a
             href="#top"
             aria-label="Lian Kang, back to top"
-            className="flex min-h-11 items-center px-2 font-mono text-sm font-bold tracking-[-0.04em] text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
+            className="cursor-target flex min-h-11 items-center px-2 font-mono text-sm font-bold tracking-[-0.04em] text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
           >
             LK<span className="ml-1 text-[var(--accent)]">&#47;&#47;</span>
           </a>
@@ -68,7 +68,7 @@ export default function Navbar() {
                   href={"#" + link.id}
                   aria-current={active ? "location" : undefined}
                   className={
-                    "relative flex min-h-11 items-center px-4 font-mono text-xs uppercase tracking-[0.12em] transition-colors duration-200 " +
+                    "cursor-target relative flex min-h-11 items-center px-4 font-mono text-xs uppercase tracking-[0.12em] transition-colors duration-200 " +
                     (active
                       ? "text-[var(--accent)]"
                       : "text-[var(--muted)] hover:text-[var(--foreground)]")
@@ -93,7 +93,7 @@ export default function Navbar() {
             </span>
             <a
               href={"mailto:" + personal.email}
-              className="inline-flex min-h-11 items-center gap-2 bg-[var(--accent)] px-4 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
+              className="cursor-target magnet-target inline-flex min-h-11 items-center gap-2 bg-[var(--accent)] px-4 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
             >
               Let&apos;s talk
               <Icon name="arrow-up-right" className="h-4 w-4" />
@@ -106,7 +106,7 @@ export default function Navbar() {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex h-11 w-11 items-center justify-center text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)] md:hidden"
+            className="cursor-target flex h-11 w-11 items-center justify-center text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)] md:hidden"
           >
             <Icon name={menuOpen ? "close" : "menu"} className="h-6 w-6" />
           </button>
@@ -122,7 +122,7 @@ export default function Navbar() {
                     key={link.id}
                     href={"#" + link.id}
                     onClick={() => setMenuOpen(false)}
-                    className="flex min-h-12 items-center justify-between border-b border-[var(--border)] px-3 font-mono text-sm uppercase tracking-[0.1em] text-[var(--muted)] transition-colors duration-200 hover:bg-[var(--surface)] hover:text-[var(--foreground)]"
+                    className="cursor-target flex min-h-12 items-center justify-between border-b border-[var(--border)] px-3 font-mono text-sm uppercase tracking-[0.1em] text-[var(--muted)] transition-colors duration-200 hover:bg-[var(--surface)] hover:text-[var(--foreground)]"
                   >
                     {link.label}
                     <span className="text-[10px] text-[var(--subtle)]">0{index + 1}</span>
@@ -130,7 +130,7 @@ export default function Navbar() {
                 ))}
                 <a
                   href={"mailto:" + personal.email}
-                  className="mt-2 inline-flex min-h-12 items-center justify-between bg-[var(--accent)] px-4 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--accent-ink)]"
+                  className="cursor-target magnet-target mt-2 inline-flex min-h-12 items-center justify-between bg-[var(--accent)] px-4 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--accent-ink)]"
                 >
                   Start a conversation
                   <Icon name="arrow-up-right" className="h-4 w-4" />
