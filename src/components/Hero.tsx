@@ -42,8 +42,7 @@ export default function Hero() {
               </a>
               <a
                 href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                download="Lee-Lian-Kang-Resume.pdf"
                 className="inline-flex min-h-12 items-center justify-center gap-3 border border-[var(--border-strong)] bg-[var(--surface)] px-6 font-mono text-sm font-semibold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--muted)] hover:bg-[var(--surface-raised)]"
               >
                 Download résumé
