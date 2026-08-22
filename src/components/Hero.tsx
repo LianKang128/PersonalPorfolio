@@ -1,190 +1,108 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import { personal, stats, techStack } from "@/lib/data";
 import Image from "next/image";
-
-const statToneStyles = {
-  success: {
-    card: "border-emerald-400/40 bg-emerald-950/20 shadow-[0_0_32px_#10b9812e]",
-    value: "text-emerald-300 drop-shadow-[0_0_12px_#34d399bf]",
-    label: "text-emerald-500/70",
-  },
-  danger: {
-    card: "border-red-500/40 bg-red-950/20 shadow-[0_0_32px_#ef444429]",
-    value: "text-red-400 drop-shadow-[0_0_12px_#f87171b3]",
-    label: "text-red-500/70",
-  },
-  neutral: {
-    card: "border-zinc-800 bg-zinc-900/60",
-    value: "text-white",
-    label: "text-zinc-600",
-  },
-};
+import Icon from "@/components/Icons";
+import { personal, quickFacts } from "@/lib/data";
 
 export default function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // Subtle animated dot grid on canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let raf: number;
-    let t = 0;
-
-    const draw = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const spacing = 28;
-      const cols = Math.ceil(canvas.width / spacing);
-      const rows = Math.ceil(canvas.height / spacing);
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const x = c * spacing + spacing / 2;
-          const y = r * spacing + spacing / 2;
-          const dist = Math.sqrt(
-            Math.pow(x - canvas.width * 0.3, 2) + Math.pow(y - canvas.height * 0.5, 2)
-          );
-          const wave = Math.sin(dist / 40 - t * 1.5) * 0.5 + 0.5;
-          const alpha = wave * 0.12;
-          ctx.beginPath();
-          ctx.arc(x, y, 1, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(139,43,43,${alpha})`;
-          ctx.fill();
-        }
-      }
-
-      t += 0.02;
-      raf = requestAnimationFrame(draw);
-    };
-
-    draw();
-    return () => cancelAnimationFrame(raf);
-  }, []);
-
   return (
-    <section
-      id="home"
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-zinc-950"
-    >
-      {/* Animated dot grid background */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-      />
-
-      {/* Red glow blob */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-red-900/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative mx-auto flex min-h-screen w-full max-w-[1800px] items-center px-6 pb-16 pt-32 sm:px-10 lg:px-16 lg:pt-40 xl:px-24 xl:pt-44">
-        <div className="grid w-full items-center gap-12 md:grid-cols-[1.15fr_0.85fr] lg:gap-20 xl:gap-28">
-
-          {/* LEFT — identity */}
-          <div>
-            {/* Status pill */}
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-4 py-2 lg:mb-10">
-              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="font-mono text-xs text-zinc-400 lg:text-sm">
-                {personal.available ? "Available for work" : "Not available"} · {personal.location}
+    <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden pt-32 sm:pt-36 lg:min-h-dvh lg:pt-40">
+      <div className="page-container flex min-h-[calc(100dvh-8rem)] flex-col justify-center pb-16 lg:pb-20">
+        <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.12fr)_minmax(340px,0.72fr)] lg:gap-16 xl:gap-24">
+          <div className="relative z-10">
+            <div className="hero-reveal mb-8 flex flex-wrap items-center gap-3">
+              <span className="inline-flex min-h-9 items-center gap-3 border border-[var(--border-strong)] bg-[var(--surface)] px-3 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
+                <span className="status-dot" aria-hidden="true" />
+                Available for opportunities
+              </span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--subtle)]">
+                Kuala Lumpur · MY
               </span>
             </div>
 
-            <h1 className="mb-5 text-6xl font-black leading-[0.9] tracking-tighter text-white sm:text-7xl md:text-8xl xl:text-9xl 2xl:text-[10rem]">
-              {personal.name.split(" ")[0]}
-              <br />
-              <span className="text-red-700">{personal.name.split(" ")[1]}</span>
+            <p className="hero-reveal hero-reveal-delay mb-5 font-mono text-xs uppercase tracking-[0.2em] text-[var(--game)]">
+              Full stack / Game systems / Creative code
+            </p>
+            <h1
+              id="hero-title"
+              className="hero-reveal hero-reveal-delay text-balance max-w-[13ch] text-[clamp(3.35rem,7.6vw,7.4rem)] font-bold leading-[0.91] tracking-[-0.065em] text-[var(--foreground)]"
+            >
+              Full-stack developer with a <span className="text-[var(--accent)]">game maker&apos;s</span> instinct.
             </h1>
 
-            <p className="mb-8 font-mono text-base tracking-wide text-zinc-500 lg:text-lg">
-              {"// "}
-              {personal.role}
-            </p>
-
-            <p className="mb-10 max-w-2xl text-base leading-relaxed text-zinc-400 lg:text-lg">
+            <p className="hero-reveal hero-reveal-late mt-8 max-w-2xl text-lg leading-8 text-[var(--muted)] sm:text-xl sm:leading-9">
               {personal.tagline}
             </p>
 
-            {/* Tech stack pills */}
-            <div className="mb-12 flex max-w-2xl flex-wrap gap-3">
-              {techStack.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-md border border-zinc-800 bg-zinc-900 px-3 py-1.5 font-mono text-xs text-zinc-500 transition-colors hover:border-red-800/50 hover:text-zinc-300 lg:text-sm"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-4">
+            <div className="hero-reveal hero-reveal-late mt-10 flex flex-col gap-3 sm:flex-row">
               <a
-                href="https://github.com/LianKang128"
-                className="rounded-full bg-red-800 px-7 py-4 text-base font-semibold text-white transition-colors hover:bg-red-700"
+                href="#work"
+                className="inline-flex min-h-12 items-center justify-center gap-3 bg-[var(--accent)] px-6 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--accent-ink)] transition-colors duration-200 hover:bg-[#dcff91]"
               >
-                View projects
+                Explore selected work
+                <Icon name="arrow-down" className="h-4 w-4" />
               </a>
               <a
                 href="/resume.pdf"
-                className="rounded-full border border-zinc-700 px-7 py-4 text-base text-zinc-400 transition-colors hover:border-zinc-500 hover:text-white"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center justify-center gap-3 border border-[var(--border-strong)] bg-[var(--surface)] px-6 font-mono text-sm font-semibold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--muted)] hover:bg-[var(--surface-raised)]"
               >
-                Download CV
+                Download résumé
+                <Icon name="download" className="h-4 w-4" />
               </a>
             </div>
           </div>
 
-          {/* RIGHT — stats */}
-          <div className="flex flex-col gap-5 lg:gap-6">
-            <div className="grid grid-cols-2 gap-4 lg:gap-6">
-              {stats.map((s) => {
-                const tone = statToneStyles[s.tone as keyof typeof statToneStyles] ?? statToneStyles.neutral;
-                const cardTone = s.toneStyle === "value" ? statToneStyles.neutral : tone;
-                const labelTone = s.toneStyle === "value" ? statToneStyles.neutral : tone;
-                const cardClass = s.color?.card ?? cardTone.card;
-                const valueClass = s.color?.value ?? tone.value;
-                const labelClass = s.color?.label ?? labelTone.label;
-
-                return (
-                <div
-                  key={s.label}
-                  className={`rounded-2xl border p-6 backdrop-blur-sm transition-all xl:p-8 ${cardClass}`}
-                >
-                  <p className={`text-4xl font-black tracking-tighter xl:text-5xl ${valueClass}`}>
-                    {s.value}
-                  </p>
-                  <p className={`mt-2 font-mono text-xs uppercase tracking-widest lg:text-sm ${labelClass}`}>
-                    {s.label}
-                  </p>
+          <div className="hero-reveal hero-reveal-late relative mx-auto w-full max-w-[31rem] pb-10 lg:mx-0 lg:justify-self-end">
+            <div className="absolute -right-5 -top-5 h-24 w-24 border-r border-t border-[var(--accent)] opacity-70" aria-hidden="true" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[var(--border-strong)] bg-[var(--surface)]">
+              <Image
+                src="/Profile.jpg"
+                alt="Lian Kang smiling at sunset by the sea"
+                fill
+                priority
+                sizes="(max-width: 1024px) 90vw, 38vw"
+                className="object-cover object-[50%_42%] saturate-[0.88]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#07100dcc] via-transparent to-transparent" aria-hidden="true" />
+              <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/80">
+                <span>Profile.jpg</span>
+                <span>4284 × 4284</span>
+              </div>
+              <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/70">Developer</p>
+                  <p className="mt-1 font-display text-2xl font-bold text-white">{personal.name}</p>
                 </div>
-                );
-              })}
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/35 bg-black/30 text-white">
+                  <Icon name="code" className="h-5 w-5" />
+                </span>
+              </div>
             </div>
 
-            {/* Profile photo placeholder */}
-            <div className="flex items-center gap-5 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur-sm xl:p-8">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl border border-zinc-700 bg-zinc-800 text-xs text-zinc-500">
-                <Image src="/Profile.jpg" alt="..." width={64} height={64} className="rounded-xl object-cover" />
+            <div className="absolute -bottom-1 -left-2 w-[min(92%,23rem)] border border-[var(--border-strong)] bg-[#09130fee] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.45)] sm:-left-8 sm:p-5">
+              <div className="mb-4 flex items-center justify-between border-b border-[var(--border)] pb-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]">developer.ts</span>
+                <span className="h-2 w-2 rounded-full bg-[var(--accent)]" aria-hidden="true" />
               </div>
-              <div>
-                <p className="text-base font-semibold text-white">{personal.name}</p>
-                <p className="mt-1 text-sm text-zinc-500">{personal.role}</p>
-                <p className="mt-3 font-mono text-sm text-zinc-600">{personal.email}</p>
+              <div className="space-y-1 font-mono text-[11px] leading-5 sm:text-xs">
+                <p><span className="text-[var(--game)]">const</span> <span className="text-[var(--cyan)]">lian</span> = {"{"}</p>
+                <p className="pl-4"><span className="text-[var(--subtle)]">role:</span> <span className="text-[#f2d69c]">&quot;full-stack&quot;</span>,</p>
+                <p className="pl-4"><span className="text-[var(--subtle)]">mode:</span> <span className="text-[#f2d69c]">&quot;build → test → refine&quot;</span>,</p>
+                <p className="pl-4"><span className="text-[var(--subtle)]">available:</span> <span className="text-[var(--accent)]">true</span></p>
+                <p>{"}"};</p>
               </div>
             </div>
           </div>
-
         </div>
-      </div>
 
-      {/* Scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <span className="text-xs text-zinc-700 font-mono">scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-zinc-700 to-transparent" />
+        <dl className="mt-16 grid border-y border-[var(--border)] sm:grid-cols-3 lg:mt-20">
+          {quickFacts.map((fact) => (
+            <div key={fact.label} className="grid grid-cols-[4rem_1fr] items-center gap-4 border-b border-[var(--border)] py-5 last:border-b-0 sm:block sm:border-b-0 sm:border-r sm:px-6 sm:first:pl-0 sm:last:border-r-0">
+              <dt className="font-mono text-2xl font-bold text-[var(--accent)] sm:mb-2">{fact.value}</dt>
+              <dd className="text-sm leading-6 text-[var(--muted)]">{fact.label}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

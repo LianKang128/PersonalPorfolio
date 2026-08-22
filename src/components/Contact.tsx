@@ -1,49 +1,73 @@
+import Icon from "@/components/Icons";
 import { personal } from "@/lib/data";
+
+const socials = [
+  { label: "GitHub", href: personal.github, note: "Code & experiments" },
+  { label: "LinkedIn", href: personal.linkedin, note: "Work & background" },
+  { label: "WhatsApp", href: personal.whatsapp, note: "Quick hello" },
+];
 
 export default function Contact() {
   return (
-    <section id="contact" className="border-t border-zinc-900 bg-zinc-950 py-28 lg:py-36">
-      <div className="mx-auto w-full max-w-[1800px] px-6 sm:px-10 lg:px-16 xl:px-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-5 font-mono text-sm uppercase tracking-widest text-zinc-600">
-            Get in touch
-          </p>
-          <h2 className="mb-6 text-5xl font-black leading-tight tracking-tighter text-white md:text-7xl">
-            Let&apos;s build something
-            <span className="text-red-700"> great</span>
-          </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-base leading-relaxed text-zinc-500 lg:text-lg">
-            Open to freelance projects, full-time roles, and interesting collaboration.
-            Response time: usually within 24h.
-          </p>
-
-          <a
-            href={`mailto:${personal.email}`}
-            className="mb-14 inline-flex items-center gap-3 rounded-full bg-red-800 px-9 py-5 text-base font-semibold text-white transition-colors hover:bg-red-700"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-            </svg>
-            {personal.email}
-          </a>
-
-          {/* Social links */}
-          <div className="flex items-center justify-center gap-8">
-            {[
-              { label: "GitHub", href: personal.github },
-              { label: "LinkedIn", href: personal.linkedin },
-              { label: "WhatsApp", href: personal.whatsapp },
-            ].map((s) => (
+    <section id="contact" aria-labelledby="contact-title" className="section-pad border-t border-[var(--border)] bg-[var(--surface)]">
+      <div className="page-container">
+        <div className="overflow-hidden border border-[var(--accent)]">
+          <div className="grid bg-[var(--accent)] text-[var(--accent-ink)] lg:grid-cols-[1.25fr_0.75fr]">
+            <div className="p-6 sm:p-10 lg:p-14 xl:p-16">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em]">Contact.request</p>
+              <h2 id="contact-title" className="text-balance mt-6 max-w-[12ch] text-5xl font-bold leading-[0.94] tracking-[-0.055em] sm:text-6xl lg:text-7xl">
+                Have a problem worth building?
+              </h2>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-[#2c381f]">
+                I&apos;m open to full-stack roles, game-adjacent work, and collaborations where thoughtful engineering makes the product noticeably better.
+              </p>
               <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-sm text-zinc-600 transition-colors hover:text-white"
+                href={"mailto:" + personal.email}
+                className="mt-9 inline-flex min-h-12 max-w-full items-center gap-3 bg-[var(--accent-ink)] px-6 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[var(--foreground)] transition-colors duration-200 hover:bg-[#1d2918]"
               >
-                {s.label} ↗
+                <Icon name="mail" className="h-5 w-5 shrink-0" />
+                <span className="[overflow-wrap:anywhere]">Send me an email</span>
+                <Icon name="arrow-up-right" className="h-4 w-4 shrink-0" />
               </a>
-            ))}
+            </div>
+
+            <div className="border-t border-[rgba(16,23,13,0.3)] bg-[var(--accent-ink)] p-6 text-[var(--foreground)] sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+              <div className="flex items-center gap-3 border-b border-[var(--border)] pb-6">
+                <span className="status-dot" aria-hidden="true" />
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent)]">Status: available</p>
+                  <p className="mt-1 text-sm text-[var(--muted)]">Usually replies within 24 hours</p>
+                </div>
+              </div>
+
+              <div className="py-7">
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--subtle)]">Direct line</p>
+                <a
+                  href={"mailto:" + personal.email}
+                  className="mt-3 block [overflow-wrap:anywhere] text-lg font-semibold text-[var(--foreground)] transition-colors duration-200 hover:text-[var(--accent)]"
+                >
+                  {personal.email}
+                </a>
+              </div>
+
+              <div className="grid border-t border-[var(--border)]">
+                {socials.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex min-h-16 items-center justify-between border-b border-[var(--border)] py-3 transition-colors duration-200 hover:text-[var(--accent)]"
+                  >
+                    <span>
+                      <span className="block font-mono text-xs font-bold uppercase tracking-[0.1em]">{social.label}</span>
+                      <span className="mt-1 block text-xs text-[var(--subtle)]">{social.note}</span>
+                    </span>
+                    <Icon name="arrow-up-right" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

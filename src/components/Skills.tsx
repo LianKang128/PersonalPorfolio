@@ -1,162 +1,100 @@
-"use client";
+import Icon from "@/components/Icons";
+import { currentlyLearning, principles, skillGroups } from "@/lib/data";
 
-import { useEffect, useRef, useState } from "react";
-import { currentlyLearning, howIWork, skills } from "@/lib/data";
-
-type SkillCategory = keyof typeof skills;
+const accentStyles = [
+  {
+    text: "text-[var(--accent)]",
+    border: "border-[rgba(201,247,101,0.34)]",
+    background: "bg-[rgba(201,247,101,0.06)]",
+  },
+  {
+    text: "text-[var(--cyan)]",
+    border: "border-[rgba(112,215,208,0.34)]",
+    background: "bg-[rgba(112,215,208,0.06)]",
+  },
+  {
+    text: "text-[var(--game)]",
+    border: "border-[rgba(255,138,91,0.34)]",
+    background: "bg-[rgba(255,138,91,0.06)]",
+  },
+];
 
 export default function Skills() {
-  const [active, setActive] = useState<SkillCategory>("Frontend");
-  const [animate, setAnimate] = useState(true);
-  const [barReady, setBarReady] = useState(false);
-  const [animationKey, setAnimationKey] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const tabTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!visible) return;
-
-    const frame = requestAnimationFrame(() => {
-      setBarReady(true);
-    });
-
-    return () => cancelAnimationFrame(frame);
-  }, [active, animationKey, visible]);
-
-  useEffect(() => {
-    return () => {
-      if (tabTimeoutRef.current) {
-        clearTimeout(tabTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  const handleTab = (cat: SkillCategory) => {
-    if (tabTimeoutRef.current) {
-      clearTimeout(tabTimeoutRef.current);
-    }
-
-    setAnimate(false);
-    setBarReady(false);
-
-    tabTimeoutRef.current = setTimeout(() => {
-      setActive(cat);
-      setAnimationKey((key) => key + 1);
-      setAnimate(true);
-    }, 150);
-  };
-
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      className="border-t border-zinc-900 bg-zinc-950 py-28 lg:py-36"
-    >
-      <div className="mx-auto w-full max-w-[1800px] px-6 sm:px-10 lg:px-16 xl:px-24">
-        <div className="mb-16">
-          <p className="mb-3 font-mono text-sm uppercase tracking-widest text-zinc-600">
-            Expertise
-          </p>
-          <h2 className="text-5xl font-black tracking-tight text-white lg:text-6xl">
-            Skills
-          </h2>
-        </div>
+    <section id="stack" aria-labelledby="stack-title" className="section-pad border-t border-[var(--border)] bg-[var(--surface)]">
+      <div className="page-container">
+        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+          <div>
+            <p className="eyebrow">Working stack</p>
+            <h2 id="stack-title" className="mt-5 text-balance text-5xl font-bold leading-[0.95] tracking-[-0.055em] text-[var(--foreground)] sm:text-6xl">
+              One builder, three technical lanes.
+            </h2>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-[var(--muted)]">
+              I enjoy owning the path from the interface a person touches to the system that keeps it running—and occasionally the world a player explores.
+            </p>
 
-        <div className="grid gap-12 md:grid-cols-3 xl:gap-16">
-          <div className="md:col-span-2">
-            <div className="mb-10 flex flex-wrap gap-3">
-              {(Object.keys(skills) as SkillCategory[]).map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => handleTab(cat)}
-                  className={`rounded-lg border px-5 py-3 font-mono text-sm transition-all ${
-                    active === cat
-                      ? "border-red-700 bg-red-800 text-white"
-                      : "border-zinc-800 bg-transparent text-zinc-500 hover:border-zinc-600 hover:text-zinc-300"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            <div className="space-y-7">
-              {skills[active].map((skill, i) => (
-                <div
-                  key={skill.name}
-                  className={`transition-all duration-300 ${
-                    animate ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-                  }`}
-                  style={{ transitionDelay: `${i * 50}ms` }}
-                >
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="font-mono text-base text-zinc-300">
-                      {skill.name}
-                    </span>
-                    <span className="text-sm text-zinc-600">{skill.pct}%</span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-zinc-900">
-                    <div
-                      className="h-full rounded-full bg-red-800 transition-all duration-700 ease-out"
-                      style={{
-                        width:
-                          visible && animate && barReady ? `${skill.pct}%` : "0%",
-                        transitionDelay: `${i * 80}ms`,
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7 xl:p-8">
-              <p className="mb-5 font-mono text-sm uppercase tracking-widest text-zinc-600">
-                How I work
-              </p>
-              {howIWork.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-start gap-4 border-b border-zinc-800/50 py-4 last:border-0"
-                >
-                  <span className="mt-0.5 text-xl">{item.icon}</span>
-                  <div>
-                    <p className="text-base font-medium text-zinc-300">{item.label}</p>
-                    <p className="mt-1 text-sm text-zinc-600">{item.sub}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7 xl:p-8">
-              <p className="mb-4 font-mono text-sm uppercase tracking-widest text-zinc-600">
-                Currently learning
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {currentlyLearning.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-md border border-red-900/30 bg-red-950/40 px-3 py-1.5 font-mono text-sm text-red-400"
-                  >
-                    {item}
+            <div className="mt-9 border-l border-[var(--border-strong)] pl-5">
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--subtle)]">Currently exploring</p>
+              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+                {currentlyLearning.map((item, index) => (
+                  <span key={item} className="font-mono text-xs text-[var(--foreground)]">
+                    {item}{index < currentlyLearning.length - 1 && <span className="ml-4 text-[var(--border-strong)]">/</span>}
                   </span>
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className="grid gap-4">
+            {skillGroups.map((group, index) => {
+              const accent = accentStyles[index];
+              return (
+                <article
+                  key={group.title}
+                  className={"group grid gap-6 border p-6 transition-colors duration-200 hover:border-[var(--border-strong)] sm:grid-cols-[4rem_1fr] sm:p-8 " + accent.border + " " + accent.background}
+                >
+                  <div className={"flex h-14 w-14 items-center justify-center border border-current " + accent.text}>
+                    <Icon name={group.icon} className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-start">
+                      <div>
+                        <p className={"font-mono text-[10px] uppercase tracking-[0.16em] " + accent.text}>Track {group.number}</p>
+                        <h3 className="mt-2 text-2xl font-bold tracking-[-0.025em] text-[var(--foreground)]">{group.title}</h3>
+                      </div>
+                      <span className="font-mono text-xs text-[var(--subtle)]">{String(group.skills.length).padStart(2, "0")} tools</span>
+                    </div>
+                    <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">{group.description}</p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {group.skills.map((skill) => (
+                        <span key={skill} className="border border-[var(--border)] bg-[rgba(7,16,13,0.65)] px-3 py-1.5 font-mono text-[11px] text-[var(--muted)]">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-20 border-t border-[var(--border)] pt-10">
+          <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <h3 className="text-3xl font-bold tracking-[-0.035em] text-[var(--foreground)]">How I approach the work</h3>
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--subtle)]">Principles over buzzwords</p>
+          </div>
+          <div className="grid border-l border-t border-[var(--border)] md:grid-cols-3">
+            {principles.map((principle, index) => (
+              <article key={principle.title} className="border-b border-r border-[var(--border)] p-6 sm:p-8">
+                <div className="flex items-center justify-between">
+                  <Icon name={principle.icon} className="h-6 w-6 text-[var(--accent)]" />
+                  <span className="font-mono text-[10px] text-[var(--subtle)]">P-0{index + 1}</span>
+                </div>
+                <h4 className="mt-8 text-lg font-bold text-[var(--foreground)]">{principle.title}</h4>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{principle.description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </div>

@@ -1,138 +1,188 @@
-"use client";
+import Icon from "@/components/Icons";
+import { personal, projects, type Project } from "@/lib/data";
 
-import { useState } from "react";
-import { personal, projects, type ProjectCategory } from "@/lib/data";
+const floorCells = new Set([
+  14, 15, 16, 17, 18, 19, 20, 21,
+  26, 29, 32, 33,
+  38, 39, 40, 41, 42, 43, 44, 45,
+  50, 53, 56, 57,
+  62, 63, 64, 65, 66, 67, 68, 69,
+  74, 77, 80, 81,
+]);
 
-const filters: { label: string; value: ProjectCategory }[] = [
-  { label: "All", value: "all" },
-  { label: "Full Stack", value: "fullstack" },
-  { label: "Frontend", value: "frontend" },
-  { label: "API", value: "api" },
-];
+const wallCells = new Set([13, 22, 25, 34, 37, 46, 49, 58, 61, 70, 73, 82]);
 
-const ProjectIcon = ({ icon }: { icon: string }) => {
-  const icons: Record<string, string> = {
-    chart: "M3 3v18h18M7 16l4-4 4 4 4-8",
-    palette: "M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM8 12h8M12 8v8",
-    api: "M4 6h16M4 12h16M4 18h7",
-    cart: "M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0",
-    motion: "M5 12h14M12 5l7 7-7 7",
-    lock: "M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2zM7 11V7a5 5 0 0 1 10 0v4",
-  };
+function DungeonVisual() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-6 w-6"
-    >
-      <path d={icons[icon] ?? icons.chart} />
-    </svg>
-  );
-};
-
-export default function Projects() {
-  const [active, setActive] = useState<ProjectCategory>("all");
-
-  const visible = projects.filter(
-    (p) => active === "all" || p.category === active
-  );
-
-  return (
-    <section id="work" className="border-t border-zinc-900 bg-zinc-950 py-28 lg:py-36">
-      <div className="mx-auto w-full max-w-[1800px] px-6 sm:px-10 lg:px-16 xl:px-24">
-
-        {/* Header */}
-        <div className="mb-16 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+    <div className="h-full min-h-[27rem] border-l-0 border-[var(--border)] bg-[#07100d] lg:border-l">
+      <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--subtle)]">
+        <span>MapGenerator.ts</span>
+        <span className="text-[var(--cyan)]">Connected · 24ms</span>
+      </div>
+      <div className="p-4 sm:p-6">
+        <div className="mb-4 flex items-center justify-between gap-4">
           <div>
-            <p className="mb-3 font-mono text-sm uppercase tracking-widest text-zinc-600">
-              Selected work
-            </p>
-            <h2 className="text-5xl font-black tracking-tight text-white lg:text-6xl">Projects</h2>
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--game)]">Seed</p>
+            <p className="mt-1 font-mono text-sm text-[var(--foreground)]">DNGN_7A32</p>
           </div>
-
-          {/* Filter tabs */}
-          <div className="flex gap-2 flex-wrap">
-            {filters.map((f) => (
-              <button
-                key={f.value}
-                onClick={() => setActive(f.value)}
-                className={`rounded-full border px-5 py-2.5 font-mono text-sm transition-all ${
-                  active === f.value
-                    ? "bg-red-800 border-red-700 text-white"
-                    : "bg-transparent border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300"
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
+          <div className="flex gap-5 text-right font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--subtle)]">
+            <p><span className="block text-base text-[var(--accent)]">04</span>Players</p>
+            <p><span className="block text-base text-[var(--cyan)]">18</span>Rooms</p>
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((p) => (
-            <a
-              key={p.id}
-              href={p.link}
-              className="group flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7 transition-all hover:border-zinc-700 hover:bg-zinc-900 xl:p-8"
-            >
-              {/* Icon */}
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-800 text-red-700 transition-colors group-hover:border-red-800/50">
-                <ProjectIcon icon={p.icon} />
-              </div>
+        <div className="dungeon-grid" aria-hidden="true">
+          {Array.from({ length: 96 }, (_, index) => {
+            let state = "";
+            if (floorCells.has(index)) state = "floor";
+            if (wallCells.has(index)) state = "wall";
+            if (index === 44) state = "spawn";
+            return <span key={index} className={"dungeon-cell " + state} />;
+          })}
+        </div>
 
-              <h3 className="mb-3 text-xl font-bold text-white">{p.name}</h3>
-              <p className="mb-6 flex-1 text-base leading-relaxed text-zinc-500">{p.desc}</p>
+        <div className="mt-4 grid grid-cols-2 gap-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--subtle)] sm:grid-cols-3">
+          <div className="border border-[var(--border)] p-3"><span className="mb-1 block text-[var(--foreground)]">Cellular</span>Algorithm</div>
+          <div className="border border-[var(--border)] p-3"><span className="mb-1 block text-[var(--foreground)]">Realtime</span>WebSocket</div>
+          <div className="col-span-2 border border-[var(--border)] p-3 sm:col-span-1"><span className="mb-1 block text-[var(--foreground)]">Party</span>Co-op</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-              {/* Tags */}
-              <div className="mb-6 flex flex-wrap gap-2">
-                {p.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded border border-zinc-700/50 bg-zinc-800 px-2.5 py-1 font-mono text-xs text-zinc-500"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Footer */}
-              <div className="flex items-center justify-between border-t border-zinc-800 pt-4">
-                <div className="flex items-center gap-1.5 text-sm text-zinc-600">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4">
-                    <path d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5z" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  {p.stars >= 1000
-                    ? `${(p.stars / 1000).toFixed(1)}k`
-                    : p.stars}
-                </div>
-                <span className="font-mono text-sm text-red-700 transition-colors group-hover:text-red-500">
-                  view →
-                </span>
-              </div>
-            </a>
+function PortfolioVisual() {
+  return (
+    <div className="relative min-h-[23rem] overflow-hidden border border-[var(--border)] bg-[#08110e]" aria-hidden="true">
+      <div className="flex items-center gap-2 border-b border-[var(--border)] px-4 py-3">
+        <span className="h-2 w-2 rounded-full bg-[var(--game)]" />
+        <span className="h-2 w-2 rounded-full bg-[#e7c95a]" />
+        <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+        <div className="ml-3 h-5 flex-1 border border-[var(--border)] bg-[var(--surface)]" />
+      </div>
+      <div className="grid min-h-[20rem] grid-cols-[4rem_1fr]">
+        <div className="border-r border-[var(--border)] p-3">
+          {[0, 1, 2, 3].map((item) => (
+            <div key={item} className={"mb-3 h-8 border " + (item === 0 ? "border-[var(--accent)] bg-[rgba(201,247,101,0.1)]" : "border-[var(--border)]")} />
           ))}
         </div>
+        <div className="p-5 sm:p-7">
+          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--game)]">Portfolio / index.tsx</p>
+          <div className="mt-5 h-3 w-3/5 bg-[var(--foreground)]" />
+          <div className="mt-3 h-3 w-4/5 bg-[var(--foreground)] opacity-90" />
+          <div className="mt-3 h-3 w-2/5 bg-[var(--accent)]" />
+          <div className="mt-7 max-w-sm space-y-2">
+            <div className="h-1.5 w-full bg-[var(--border-strong)]" />
+            <div className="h-1.5 w-11/12 bg-[var(--border)]" />
+            <div className="h-1.5 w-3/4 bg-[var(--border)]" />
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-3">
+            <div className="h-16 border border-[var(--game)] bg-[rgba(255,138,91,0.08)]" />
+            <div className="h-16 border border-[var(--cyan)] bg-[rgba(112,215,208,0.06)]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* GitHub CTA */}
-        <div className="mt-14 text-center">
+function ProjectContent({ project, compact = false }: { project: Project; compact?: boolean }) {
+  return (
+    <div className={compact ? "flex h-full flex-col" : ""}>
+      <div className="mb-7 flex items-start justify-between gap-6">
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--game)]">Project {project.number}</p>
+          <p className="mt-2 font-mono text-xs text-[var(--subtle)]">{project.type}</p>
+        </div>
+        <span className="font-mono text-3xl font-bold text-[var(--border-strong)]">{project.number}</span>
+      </div>
+
+      <h3 className="text-balance text-3xl font-bold leading-tight tracking-[-0.035em] text-[var(--foreground)] sm:text-4xl">
+        {project.name}
+      </h3>
+      <p className="mt-4 text-lg font-semibold leading-7 text-[var(--foreground)]">{project.summary}</p>
+      <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]">{project.description}</p>
+
+      <ul className="mt-7 space-y-3" aria-label={project.name + " features"}>
+        {project.features.map((feature) => (
+          <li key={feature} className="flex items-start gap-3 text-sm leading-6 text-[var(--muted)]">
+            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-[var(--border-strong)] text-[var(--accent)]">
+              <Icon name="check" className="h-3.5 w-3.5" />
+            </span>
+            {feature}
+          </li>
+        ))}
+      </ul>
+
+      <div className={"mt-8 flex flex-wrap gap-2 " + (compact ? "" : "lg:max-w-xl")}>
+        {project.tags.map((tag) => (
+          <span key={tag} className="border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-[var(--muted)]">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <div className={compact ? "mt-auto pt-8" : "mt-9"}>
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex min-h-11 items-center gap-3 border-b border-[var(--foreground)] font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+        >
+          View source on GitHub
+          <Icon name="arrow-up-right" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export default function Projects() {
+  const [gameProject, portfolioProject] = projects;
+
+  return (
+    <section id="work" aria-labelledby="work-title" className="section-pad border-t border-[var(--border)] bg-[rgba(7,16,13,0.78)]">
+      <div className="page-container">
+        <div className="mb-12 grid gap-8 lg:grid-cols-[0.72fr_1fr] lg:items-end lg:gap-16">
+          <div>
+            <p className="eyebrow">Selected work</p>
+            <h2 id="work-title" className="mt-5 text-5xl font-bold tracking-[-0.055em] text-[var(--foreground)] sm:text-6xl lg:text-7xl">
+              Built to be used.
+            </h2>
+          </div>
+          <p className="max-w-2xl text-lg leading-8 text-[var(--muted)] lg:justify-self-end">
+            A focused set of projects that show how I connect architecture, interaction, and the details that make software feel complete.
+          </p>
+        </div>
+
+        <article className="grid overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)] lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="p-6 sm:p-9 lg:p-11 xl:p-14">
+            <ProjectContent project={gameProject} />
+          </div>
+          <DungeonVisual />
+        </article>
+
+        <article className="mt-6 grid gap-0 border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-7 lg:grid-cols-[1fr_0.9fr] lg:gap-10 lg:p-10">
+          <PortfolioVisual />
+          <div className="pt-8 lg:pt-0">
+            <ProjectContent project={portfolioProject} compact />
+          </div>
+        </article>
+
+        <div className="mt-10 flex flex-col justify-between gap-5 border-t border-[var(--border)] pt-6 sm:flex-row sm:items-center">
+          <p className="font-mono text-xs uppercase tracking-[0.12em] text-[var(--subtle)]">
+            More experiments live in the repository
+          </p>
           <a
             href={personal.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-800 px-6 py-3 font-mono text-sm text-zinc-500 transition-all hover:border-zinc-600 hover:text-white"
+            className="inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--accent)] transition-colors duration-200 hover:text-[#dcff91]"
           >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            See all repos on GitHub
+            Browse all GitHub projects
+            <Icon name="arrow-up-right" className="h-4 w-4" />
           </a>
         </div>
-
       </div>
     </section>
   );

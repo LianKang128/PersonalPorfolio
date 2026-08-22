@@ -1,19 +1,289 @@
 @import "tailwindcss";
 
-html { scroll-behavior: smooth; }
+:root {
+  --background: #07100d;
+  --surface: #0c1712;
+  --surface-raised: #111e17;
+  --surface-soft: #16231c;
+  --foreground: #f3f5ed;
+  --muted: #a7b2aa;
+  --subtle: #7f8d84;
+  --border: #2b3a31;
+  --border-strong: #415448;
+  --accent: #c9f765;
+  --accent-ink: #10170d;
+  --game: #ff8a5b;
+  --cyan: #70d7d0;
+  --blue: #8ea8ff;
+  --ring: #d9ff8a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
+}
 
 body {
-  background: #0a0a0a;
-  color: #e8e8e8;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 78% 5%, rgba(201, 247, 101, 0.07), transparent 25rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body > div {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display), Arial, sans-serif;
+}
+
+.font-mono,
+code {
+  font-family: var(--font-mono), "Courier New", monospace;
+}
+
+a,
+button {
+  touch-action: manipulation;
+}
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+section {
+  scroll-margin-top: 7rem;
 }
 
 ::selection {
-  background: rgba(139, 43, 43, 0.4);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0d0d0d; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #8b2b2b; }
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid var(--background);
+  border-radius: 999px;
+  background: var(--border-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 1000;
+  transform: translateY(-180%);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.page-grid {
+  position: relative;
+  isolation: isolate;
+}
+
+.page-grid::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.24;
+  background-image:
+    linear-gradient(rgba(126, 151, 135, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 151, 135, 0.08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 52rem);
+}
+
+.page-container {
+  width: min(100%, 1320px);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 4rem);
+}
+
+.section-pad {
+  padding-block: clamp(5.5rem, 10vw, 9rem);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--accent);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+  content: "";
+}
+
+.hero-reveal {
+  animation: reveal-up 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero-reveal-delay {
+  animation-delay: 110ms;
+}
+
+.hero-reveal-late {
+  animation-delay: 220ms;
+}
+
+.status-dot {
+  position: relative;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.status-dot::after {
+  position: absolute;
+  inset: -0.25rem;
+  border: 1px solid var(--accent);
+  border-radius: inherit;
+  content: "";
+  animation: status-pulse 1.8s ease-out infinite;
+}
+
+.dungeon-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 3px;
+  padding: 1rem;
+  border: 1px solid rgba(112, 215, 208, 0.26);
+  background: #08120f;
+}
+
+.dungeon-cell {
+  aspect-ratio: 1;
+  border: 1px solid rgba(112, 215, 208, 0.08);
+  background: rgba(112, 215, 208, 0.035);
+}
+
+.dungeon-cell.floor {
+  border-color: rgba(112, 215, 208, 0.2);
+  background: rgba(112, 215, 208, 0.13);
+}
+
+.dungeon-cell.wall {
+  border-color: rgba(255, 138, 91, 0.34);
+  background: rgba(255, 138, 91, 0.18);
+}
+
+.dungeon-cell.spawn {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(201, 247, 101, 0.5);
+}
+
+.game-screen {
+  background:
+    linear-gradient(rgba(255, 138, 91, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 138, 91, 0.08) 1px, transparent 1px),
+    #09120f;
+  background-size: 24px 24px;
+}
+
+.blueprint-grid {
+  background:
+    linear-gradient(rgba(142, 168, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(142, 168, 255, 0.09) 1px, transparent 1px),
+    rgba(16, 26, 39, 0.75);
+  background-size: 24px 24px;
+}
+
+.code-line::before {
+  margin-right: 0.75rem;
+  color: var(--subtle);
+  content: attr(data-line);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.7);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

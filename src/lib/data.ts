@@ -1,167 +1,172 @@
 export const personal = {
   name: "Lian Kang",
+  fullName: "Lee Lian Kang",
   role: "Full Stack Developer",
+  headline: "Full-stack developer with a game maker's instinct.",
   tagline:
-    "I craft high-performance web apps with clean architecture and obsessive attention to detail. From API to pixel.",
+    "I build dependable web products from interface to API, with the same curiosity I bring to gameplay systems and interactive worlds.",
   location: "Kuala Lumpur, Malaysia",
   available: true,
   email: "leeliankang1@gmail.com",
   github: "https://github.com/LianKang128",
   linkedin: "https://www.linkedin.com/in/lee-lian-kang-4b45392a0/",
-  whatsapp: "https://wa.me/1137004780",
+  whatsapp: "https://wa.me/601137004780",
 };
 
-type StatTone = "success" | "danger" | "neutral";
+export const quickFacts = [
+  { value: "01", label: "Game development internship" },
+  { value: "03", label: "Frontend, backend, and game systems" },
+  { value: "KL", label: "Based in Kuala Lumpur" },
+];
 
-type StatColor = {
-  card?: string;
-  value?: string;
-  label?: string;
+export type Project = {
+  id: number;
+  number: string;
+  name: string;
+  type: string;
+  summary: string;
+  description: string;
+  features: string[];
+  tags: string[];
+  link: string;
+  visual: "dungeon" | "portfolio";
 };
 
-type Stat = {
-  value: string;
-  label: string;
-  tone: StatTone;
-  toneStyle: "full" | "value";
-  color?: StatColor;
-};
-
-export const stats: Stat[] = [
+export const projects: Project[] = [
   {
-    value: "TRUE",
-    label: "Internship completed",
-    tone: "success",
-    toneStyle: "full",
-    color: {},
+    id: 1,
+    number: "01",
+    name: "2D Map Random Generation",
+    type: "Game systems / Full stack",
+    summary: "A multiplayer dungeon crawler built around maps that never repeat.",
+    description:
+      "A Cocos Creator and Node.js experiment that connects procedural generation, party-based play, and real-time WebSocket networking into one playable system.",
+    features: [
+      "Cellular-automata dungeon generation",
+      "Real-time multiplayer state",
+      "Party-based gameplay loop",
+    ],
+    tags: ["Cocos Creator", "TypeScript", "Node.js", "WebSocket", "Algorithms"],
+    link: "https://github.com/LianKang128/2DMapRandomGeneration",
+    visual: "dungeon",
   },
   {
-    value: "2+",
-    label: "Years of Coding Experience",
-    tone: "neutral",
-    toneStyle: "value",
-    color: {
-      value: "text-sky-300 drop-shadow-[0_0_12px_#7dd3fccc]",
-    },
-  },
-  {
-    value: "Computer Science",
-    label: "Bachelor Degree",
-    tone: "neutral",
-    toneStyle: "value",
-    color: {
-        value: "text-yellow-300 drop-shadow-[0_0_12px_#facc15cc]",
-    },
+    id: 2,
+    number: "02",
+    name: "Personal Portfolio",
+    type: "Frontend / Design engineering",
+    summary: "This site, designed as a clear view into how I think and build.",
+    description:
+      "A responsive portfolio built with the Next.js App Router, typed content, accessible interactions, and a visual system made for technical readers.",
+    features: [
+      "Responsive editorial layout",
+      "Accessible navigation and motion",
+      "Reusable, typed content model",
+    ],
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    link: "https://github.com/LianKang128/PersonalPorfolio",
+    visual: "portfolio",
   },
 ];
 
-export const techStack = [
-  "Next.js",
-  "Node.js",
-  "TypeScript",
-  "PostgreSQL",
-  "Express",
-  "Flask/FastAPI",
-  "Tailwind CSS",
-  "AWS",
-  "CocosCreator",
+export const skillGroups = [
+  {
+    number: "01",
+    title: "Frontend engineering",
+    description:
+      "Interfaces that stay clear, responsive, and maintainable as the product grows.",
+    icon: "code" as const,
+    skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Testing"],
+  },
+  {
+    number: "02",
+    title: "Backend & data",
+    description:
+      "APIs, real-time flows, and data models built around predictable behavior.",
+    icon: "server" as const,
+    skills: ["Node.js", "Express", "PostgreSQL", "MongoDB", "Flask / FastAPI", "WebSocket"],
+  },
+  {
+    number: "03",
+    title: "Game & interactive",
+    description:
+      "Gameplay systems where technical rules become something a player can feel.",
+    icon: "gamepad" as const,
+    skills: ["Cocos Creator", "Roblox Studio", "Tiled", "Luau", "Procedural generation"],
+  },
 ];
 
-export const skills = {
-  Frontend: [
-    { name: "Next.js / React", pct: 80 },
-    { name: "TypeScript", pct: 70 },
-    { name: "Tailwind CSS", pct: 65 },
-    { name: "Animation / Motion", pct: 50 },
-    { name: "Testing (Vitest)", pct: 75 },
-  ],
-  Backend: [
-    { name: "Node.js / Express", pct: 90 },
-    { name: "PostgreSQL", pct: 80 },
-    { name: "MongoDB - NoSQL", pct: 70 },
-    { name: " REST", pct: 80 },
-    { name: "Flask / FastAPI", pct: 60 },
-    { name: "WebSocket / Real-time", pct: 85 },
-  ],
-  Game: [
-    { name: "CocosCreator", pct: 80 },
-    { name: "Roblox Studio", pct: 85 },
-    { name: "Tiled Map Editor", pct: 70 },
-    { name: "Luau", pct: 75 },
-  ]
-
-};
-
-export const howIWork = [
-  { icon: "⚡", label: "Performance-first", sub: "Every ms counts" },
-  { icon: "♿", label: "Accessibility", sub: "WCAG 2.1 AA standard" },
-  { icon: "🔒", label: "Security", sub: "OWASP top 10 aware" },
-  { icon: "🧪", label: "Test coverage", sub: "Unit + E2E always" },
+export const principles = [
+  {
+    title: "Build the system, not the patch",
+    description: "I look for reusable boundaries before adding another one-off fix.",
+    icon: "layers" as const,
+  },
+  {
+    title: "Make behavior visible",
+    description: "Clear states, useful feedback, and interfaces that explain themselves.",
+    icon: "spark" as const,
+  },
+  {
+    title: "Test in the real context",
+    description: "Ship small, observe the result, and refine with evidence.",
+    icon: "check" as const,
+  },
 ];
 
 export const currentlyLearning = ["Rust", "LLM APIs", "Edge Runtime", "WebGPU"];
 
-export type ProjectCategory = "all" | "fullstack" | "frontend" | "api";
+export type Experience = {
+  id: number;
+  number: string;
+  kind: "game" | "education";
+  role: string;
+  company: string;
+  period: string;
+  location: string;
+  summary: string;
+  detail: string;
+  notes: string[];
+  tools: string[];
+};
 
-export const projects = [
+export const experience: Experience[] = [
   {
     id: 1,
-    name: "2D Map Random Generation",
-    desc: "🎮 Multiplayer Dungeon Crawler A real-time multiplayer dungeon crawler game built with Cocos Creator (TypeScript) and Node.js, featuring procedurally generated dungeons, party system, and WebSocket-based networking. 🌟 Features 🎯 Core Gameplay.",
-    tags: ["Cellular Automata", "WebSocket", "Node.js", "Algorithm", "Game Development"],
-    category: "fullstack" as const,
-    stars: 0,
-    link: "https://github.com/LianKang128/2DMapRandomGeneration",
-    icon: "chart",
-  },
-  {
-    id: 2,
-    name: "Personal Portfolio Website",
-    desc: "A fast, minimal personal portfolio built with Next.js 16, TypeScript, and Tailwind CSS v4.",
-    tags: ["React", "Tailwind", "Storybook"],
-    category: "frontend" as const,
-    stars: 0,
-    link: "https://github.com/LianKang128/PersonalPorfolio",
-    icon: "palette",
-  },
-];
-
-export const experience = [
-  {
-    id: 1,
-    role: "Game Developer - Intern",
+    number: "01",
+    kind: "game",
+    role: "Game Developer Intern",
     company: "IXI Creatives Sdn Bhd",
-    period: "Dec 2024 - May 2025",
-    current: false,
-    location: "Kuala Lumpur, Malaysia - Hybrid",
-    desc: "Leading frontend architecture for a B2B SaaS platform with 200k+ users. Migrated monolith to micro-frontends, cutting build times by 60%.",
+    period: "Dec 2024 — May 2025",
+    location: "Kuala Lumpur · Hybrid",
+    summary:
+      "Six months inside a game-production environment, translating gameplay ideas into systems that could be built, tested, and refined.",
     detail:
-      "Owned the frontend platform for a large SaaS product, shaping component architecture, performance budgets, release workflows, and developer experience across multiple teams.",
-    skillsUsed: ["Next.js", "React", "TypeScript", "Tailwind", "Testing"],
-    learned: ["Micro-frontends", "Design systems", "Frontend performance"],
-    highlights: [
-      "Reduced build times by 60% through modular architecture.",
-      "Improved UI consistency with a reusable component system.",
-      "Mentored developers on scalable React patterns.",
+      "This chapter sharpened the bridge between creative intent and technical execution. It taught me to think in player states, feedback loops, edge cases, and the small details that make an interaction feel right.",
+    notes: [
+      "Worked with Cocos Creator and TypeScript in a production game-development setting.",
+      "Turned gameplay requirements into focused implementation and testing cycles.",
+      "Built practical habits around debugging, version control, and cross-discipline feedback.",
     ],
+    tools: ["Cocos Creator", "TypeScript", "Tiled", "Git"],
   },
   {
     id: 2,
-    role: "Student",
-    company: "Asia Pacific University of Technology & Innovation (APU)",
-    period: "2023-2026",
-    current: false,
-    location: "Kuala Lumpur, Malaysia - Onsite",
-    desc: "Pursuing a Bachelor's degree in Computer Science with a focus on software development, algorithms, and data structures. Expected graduation in 2025.",
+    number: "02",
+    kind: "education",
+    role: "BSc (Hons) Computer Science",
+    company: "Asia Pacific University of Technology & Innovation",
+    period: "2023 — 2026",
+    location: "Kuala Lumpur · On campus",
+    summary:
+      "A formal foundation in computer science, strengthened through software projects beyond the classroom.",
     detail:
-      "Currently enrolled in a comprehensive Computer Science program, focusing on software engineering principles, algorithm design, and data structures. Actively participating in coding competitions and collaborative projects.",
-    skillsUsed: ["Python", "Java", "C++", "Data Structures", "Algorithms"],
-    learned: ["Software Engineering", "Problem Solving", "Team Collaboration"],
-    highlights: [
-      "Maintained a strong academic record with a focus on computer science fundamentals.",
-      "Participated in university hackathons and coding challenges.",
-      "Collaborated on group projects to develop real-world applications.",
+      "My degree connects the fundamentals—algorithms, data structures, databases, and software engineering—to the practical work I enjoy most: building complete products and interactive systems.",
+    notes: [
+      "Developed a foundation in algorithms, data structures, and system design.",
+      "Applied concepts through individual and collaborative software projects.",
+      "Expanded beyond coursework through frontend, backend, and game development.",
     ],
-
-  }
+    tools: ["Java", "Python", "C++", "SQL"],
+  },
 ];

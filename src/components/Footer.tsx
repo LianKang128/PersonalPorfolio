@@ -1,16 +1,23 @@
+import Icon from "@/components/Icons";
 import { personal } from "@/lib/data";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-zinc-900 bg-zinc-950 px-6 py-8 sm:px-10 lg:px-16">
-      <div className="mx-auto flex w-full max-w-[1800px] flex-col items-center justify-between gap-4 sm:flex-row">
-        <p className="font-mono text-sm text-zinc-700">
-          © 2025 {personal.name} · Built with Next.js &amp; Tailwind
-        </p>
-        <div className="flex items-center gap-2 font-mono text-sm text-zinc-700">
-          <span className="h-2 w-2 rounded-full bg-green-600 animate-pulse" />
-          <span>All systems operational</span>
+    <footer className="border-t border-[var(--border)] bg-[var(--background)]">
+      <div className="page-container flex flex-col justify-between gap-6 py-8 sm:flex-row sm:items-center">
+        <div>
+          <p className="font-display text-lg font-bold text-[var(--foreground)]">{personal.fullName}</p>
+          <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--subtle)]">
+            Designed & built in Kuala Lumpur · 2026
+          </p>
         </div>
+        <a
+          href="#top"
+          className="inline-flex min-h-11 items-center gap-3 self-start font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--muted)] transition-colors duration-200 hover:text-[var(--accent)] sm:self-auto"
+        >
+          Back to top
+          <Icon name="arrow-down" className="h-4 w-4 rotate-180" />
+        </a>
       </div>
     </footer>
   );
