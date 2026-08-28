@@ -140,7 +140,7 @@ export const experience: Experience[] = [
     role: "Game Developer Intern",
     company: "IXI Creatives Sdn Bhd",
     period: "Dec 2024 — May 2025",
-    location: "Kuala Lumpur · Hybrid",
+    location: "Kuala Lumpur · On-site",
     summary:
       "Six months inside a game-production environment, translating gameplay ideas into systems that could be built, tested, and refined.",
     detail:
